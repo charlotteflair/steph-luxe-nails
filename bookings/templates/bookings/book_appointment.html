@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book an Appointment - Steph Luxe Nails</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #F5EBDD;
+            color: #3E2C23;
+        }
+
+        header {
+            background: #6B4F3A;
+            color: #FFF9F2;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 26px;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #FFF9F2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #D8C2A8;
+        }
+
+        .booking-container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #FFF9F2;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(62, 44, 35, 0.15);
+        }
+
+        .booking-container h2 {
+            text-align: center;
+            color: #6B4F3A;
+            margin-bottom: 10px;
+        }
+
+        .intro {
+            text-align: center;
+            color: #7A6250;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #6B4F3A;
+            border-bottom: 1px solid #D8C2A8;
+            padding-bottom: 8px;
+            margin-top: 30px;
+        }
+
+        form p {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #5A3E2B;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #D8C2A8;
+            border-radius: 8px;
+            background: #FFFFFF;
+            color: #3E2C23;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #6B4F3A;
+            box-shadow: 0 0 5px rgba(107, 79, 58, 0.25);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            background: #5A3E2B;
+            color: #FFF9F2;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3E2C23;
+        }
+
+        .errorlist {
+            list-style: none;
+            padding: 12px 15px;
+            margin: 10px 0 20px;
+            background: #F3E1D1;
+            color: #6B4F3A;
+            border: 1px solid #C8A98A;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .back-home a {
+            color: #6B4F3A;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-home a:hover {
+            color: #3E2C23;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>✦ Steph Luxe Nails ✦</h1>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'contact' %}">Contact</a>
+        </nav>
+    </header>
+
+    <div class="booking-container">
+
+        <h2>Book Your Nail Appointment 💅</h2>
+
+        <p class="intro">
+            Choose your preferred service, nail technician, date and time.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <h3 class="section-title">👤 Customer Information</h3>
+
+            {{ form.customer_name }}
+            {{ form.customer_email }}
+            {{ form.customer_phone }}
+
+            <h3 class="section-title">💅 Appointment Details</h3>
+
+            {{ form.service }}
+            {{ form.nail_technician }}
+            {{ form.appointment_date }}
+            {{ form.start_time }}
+            {{ form.end_time }}
+            {{ form.notes }}
+
+            {{ form.non_field_errors }}
+
+            <button type="submit">
+                Book Appointment
+            </button>
+        </form>
+
+        <div class="back-home">
+            <a href="/">← Back to Home</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
