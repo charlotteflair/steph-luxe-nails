@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import AppointmentForm
-from .models import Appointment
+from .models import Appointment, Service
 
 
 def home(request):
@@ -8,6 +8,8 @@ def home(request):
 
 
 def book_appointment(request):
+    service_name = request.GET.get("service")
+
     if request.method == "POST":
         form = AppointmentForm(request.POST)
 
@@ -17,14 +19,23 @@ def book_appointment(request):
             request.session["appointment_id"] = appointment.id
             return redirect("booking_success")
     else:
-        form = AppointmentForm()
+        if service_name:
+            try:
+                service = Service.objects.get(
+                    name=service_name,
+                    is_active=True
+                )
+                form = AppointmentForm(initial={"service": service})
+            except Service.DoesNotExist:
+                form = AppointmentForm()
+        else:
+            form = AppointmentForm()
 
     return render(
         request,
         "bookings/book_appointment.html",
         {"form": form}
     )
-
 
 def booking_success(request):
     appointment_id = request.session.get("appointment_id")
